@@ -38,5 +38,10 @@
     "urun_adi": "Jelibon",
     "miktar": 2,
     "birim": "paket"
+  },
+  "su": {
+    "urun_adi": "su",
+    "miktar": 80,
+    "birim": "litre"
   }
 }
