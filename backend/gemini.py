@@ -1,12 +1,11 @@
-import google.generativeai as genai
+from google import genai
 import json
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-1.5-flash")
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 async def parse_stok(metin: str):
     prompt = f"""
@@ -29,11 +28,14 @@ Sesli not: "{metin}"
 
 Sadece JSON listesi döndür:
 """
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents=prompt
+    )
     
-    response = model.generate_content(prompt)
     text = response.text.strip()
     
-    # Gemini bazen ```json ``` ekliyor, temizle
     if text.startswith("```"):
         text = text.split("```")[1]
         if text.startswith("json"):

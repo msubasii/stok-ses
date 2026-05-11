@@ -1,0 +1,17 @@
+{
+  "un": {
+    "urun_adi": "un",
+    "miktar": 40,
+    "birim": "kilo"
+  },
+  "ayçiçek yağı": {
+    "urun_adi": "ayçiçek yağı",
+    "miktar": 12,
+    "birim": "şişe"
+  },
+  "domates salçası": {
+    "urun_adi": "domates salçası",
+    "miktar": 0,
+    "birim": "adet"
+  }
+}
