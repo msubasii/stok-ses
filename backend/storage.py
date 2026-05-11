@@ -13,11 +13,34 @@ def stok_guncelle(urunler: list):
     stok = stok_getir()
     for urun in urunler:
         ad = urun["urun_adi"].lower().strip()
-        stok[ad] = {
-            "urun_adi": urun["urun_adi"],
-            "miktar": urun["miktar"],
-            "birim": urun["birim"]
-        }
+        islem = urun.get("islem", "mutlak")
+        
+        if islem == "mutlak":
+            stok[ad] = {
+                "urun_adi": urun["urun_adi"],
+                "miktar": urun["miktar"],
+                "birim": urun["birim"]
+            }
+        elif islem == "cikar":
+            if ad in stok:
+                yeni_miktar = max(0, stok[ad]["miktar"] - urun["miktar"])
+                stok[ad]["miktar"] = yeni_miktar
+            else:
+                stok[ad] = {
+                    "urun_adi": urun["urun_adi"],
+                    "miktar": 0,
+                    "birim": urun["birim"]
+                }
+        elif islem == "ekle":
+            if ad in stok:
+                stok[ad]["miktar"] += urun["miktar"]
+            else:
+                stok[ad] = {
+                    "urun_adi": urun["urun_adi"],
+                    "miktar": urun["miktar"],
+                    "birim": urun["birim"]
+                }
+    
     with open(STOK_DOSYA, "w", encoding="utf-8") as f:
         json.dump(stok, f, ensure_ascii=False, indent=2)
 

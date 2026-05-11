@@ -1,7 +1,7 @@
 {
   "un": {
     "urun_adi": "un",
-    "miktar": 40,
+    "miktar": 92,
     "birim": "kilo"
   },
   "ayçiçek yağı": {
@@ -23,5 +23,10 @@
     "urun_adi": "salatalık",
     "miktar": 3,
     "birim": "adet"
+  },
+  "patates": {
+    "urun_adi": "patates",
+    "miktar": 120,
+    "birim": "kilo"
   }
 }
