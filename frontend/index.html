@@ -4,215 +4,420 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StokSes</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --mocha: #4B3935;
+      --mocha-light: #7a6560;
+      --mocha-deep: #2e2220;
+      --cream: #F0E7D5;
+      --cream-dark: #e0d4be;
+      --cream-deeper: #d0bfaa;
+      --white: #ffffff;
+      --danger: #8B2020;
+      --danger-bg: #fdecea;
+      --danger-border: #f5c0c0;
+      --success: #2e6b35;
+      --success-bg: #eaf5e9;
+      --info-bg: #e8f0fe;
+      --info: #1a4fa0;
+      --radius: 14px;
+      --radius-sm: 9px;
+      --shadow: 0 2px 14px rgba(75,57,53,0.09);
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F0E7D5; min-height: 100vh; }
-    .header { background: #4B3935; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-size: 16px; font-weight: 500; color: #F0E7D5; display: flex; align-items: center; gap: 8px; }
-    .logo-icon { width: 28px; height: 28px; background: #F0E7D5; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-    .logo-icon svg { width: 16px; height: 16px; stroke: #4B3935; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .badge { background: #6b524e; color: #F0E7D5; font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 500; }
-    .main { padding: 20px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .card { background: #fff; border: 0.5px solid #d4c9bc; border-radius: 12px; padding: 16px; }
-    .card-title { font-size: 13px; font-weight: 500; color: #4B3935; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-    .mic-area { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px 0; }
-    .mic-btn { width: 72px; height: 72px; border-radius: 50%; background: #4B3935; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
-    .mic-btn.recording { background: #8B2020; }
-    .mic-btn svg { width: 28px; height: 28px; stroke: #F0E7D5; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .mic-label { font-size: 13px; color: #7a6560; }
-    .transcript-box { background: #F0E7D5; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #4B3935; line-height: 1.5; min-height: 60px; }
-    .send-btn { width: 100%; padding: 9px; background: #4B3935; color: #F0E7D5; border: none; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; margin-top: 10px; }
-    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-    .stat { background: #F0E7D5; border-radius: 8px; padding: 10px; text-align: center; }
-    .stat-num { font-size: 20px; font-weight: 500; color: #4B3935; }
-    .stat-num.danger { color: #8B2020; }
-    .stat-label { font-size: 11px; color: #7a6560; margin-top: 2px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
-    th { text-align: left; padding: 6px 8px; color: #7a6560; font-weight: 500; border-bottom: 0.5px solid #d4c9bc; }
-    td { padding: 7px 8px; border-bottom: 0.5px solid #d4c9bc; color: #4B3935; }
+    body { font-family: 'DM Sans', sans-serif; background: #ede4d2; min-height: 100vh; color: var(--mocha); }
+
+    .header { background: var(--mocha); padding: 0 32px; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .header-left { display: flex; align-items: center; gap: 11px; }
+    .logo-mark { width: 32px; height: 32px; background: var(--cream); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .logo-mark svg { width: 17px; height: 17px; stroke: var(--mocha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--cream); line-height: 1.1; }
+    .logo-sub { font-size: 10px; color: rgba(240,231,213,0.5); letter-spacing: 0.02em; }
+    .status-pill { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.14); border-radius: 99px; padding: 5px 13px; font-size: 12px; color: rgba(240,231,213,0.75); }
+    .status-dot { width: 7px; height: 7px; background: #6fcf7a; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    .page { max-width: 1400px; margin: 0 auto; padding: 22px 28px; display: grid; grid-template-columns: 1fr 340px; gap: 18px; align-items: start; }
+    .left { display: flex; flex-direction: column; gap: 16px; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .stat-card { background: var(--white); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); border: 0.5px solid var(--cream-deeper); display: flex; align-items: center; gap: 14px; }
+    .stat-icon-wrap { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .stat-icon-wrap.neutral { background: var(--cream); }
+    .stat-icon-wrap.danger { background: var(--danger-bg); }
+    .stat-icon-wrap.success { background: var(--success-bg); }
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 28px; line-height: 1; color: var(--mocha); }
+    .stat-num.danger { color: var(--danger); }
+    .stat-num.success { color: var(--success); }
+    .stat-label { font-size: 11px; color: var(--mocha-light); margin-top: 3px; }
+
+    .mid-row { display: grid; grid-template-columns: 1fr 1.25fr; gap: 14px; align-items: stretch; }
+
+    .card { background: var(--white); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); border: 0.5px solid var(--cream-deeper); }
+    .card-title { font-size: 11px; font-weight: 500; color: var(--mocha-light); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+    .card-title svg { opacity: 0.6; flex-shrink: 0; }
+    .card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .card-title-row .card-title { margin-bottom: 0; }
+
+    .ai-list { display: flex; flex-direction: column; gap: 7px; }
+    .ai-item { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: var(--cream); border-radius: var(--radius-sm); border: 0.5px solid var(--cream-deeper); animation: fadein 0.3s ease; }
+    @keyframes fadein { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+    .ai-check { width: 16px; height: 16px; background: var(--success-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ai-check svg { width: 9px; height: 9px; stroke: var(--success); stroke-width: 3; fill: none; }
+    .ai-name { font-size: 13px; font-weight: 500; color: var(--mocha); flex: 1; }
+    .ai-op { font-size: 10px; padding: 2px 6px; border-radius: 99px; font-weight: 500; }
+    .op-m { background: var(--info-bg); color: var(--info); }
+    .op-c { background: var(--danger-bg); color: var(--danger); }
+    .op-e { background: var(--success-bg); color: var(--success); }
+    .ai-val { font-size: 12px; color: var(--mocha-light); white-space: nowrap; }
+    .ai-placeholder { display: flex; flex-direction: column; gap: 7px; opacity: 0.3; pointer-events: none; }
+    .ai-ph-item { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: var(--cream); border-radius: var(--radius-sm); border: 0.5px solid var(--cream-deeper); }
+    .ai-ph-bar { height: 10px; background: var(--mocha); border-radius: 99px; }
+    .ai-empty { font-size: 12px; color: var(--mocha-light); font-style: italic; text-align: center; padding: 10px 0 4px; opacity: 0.7; }
+
+    .mic-center { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 8px 0 16px; }
+    .mic-ring { position: relative; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; }
+    .mic-ring::before, .mic-ring::after { content: ''; position: absolute; border-radius: 50%; border: 1.5px solid var(--mocha); opacity: 0; }
+    .mic-ring.recording::before { opacity:0.22; animation: rpulse 1.3s ease-out infinite; }
+    .mic-ring.recording::after { width:140%; height:140%; opacity:0.1; animation: rpulse 1.3s ease-out infinite 0.4s; }
+    @keyframes rpulse { 0%{transform:scale(0.88);opacity:0.25} 100%{transform:scale(1.3);opacity:0} }
+    .mic-btn { width: 82px; height: 82px; border-radius: 50%; background: var(--mocha); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, background 0.15s; position: relative; z-index: 1; }
+    .mic-btn:hover { transform: scale(1.06); background: var(--mocha-deep); }
+    .mic-btn:active { transform: scale(0.95); }
+    .mic-btn.recording { background: var(--danger); }
+    .mic-btn svg { width: 32px; height: 32px; stroke: var(--cream); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .waveform { display: flex; align-items: center; gap: 3px; height: 24px; opacity: 0; transition: opacity 0.3s; }
+    .waveform.active { opacity: 1; }
+    .wb { width: 3px; background: var(--mocha); border-radius: 99px; height: 4px; }
+    .waveform.active .wb:nth-child(1){animation:wv 0.75s ease-in-out infinite 0.00s}
+    .waveform.active .wb:nth-child(2){animation:wv 0.75s ease-in-out infinite 0.10s}
+    .waveform.active .wb:nth-child(3){animation:wv 0.75s ease-in-out infinite 0.20s}
+    .waveform.active .wb:nth-child(4){animation:wv 0.75s ease-in-out infinite 0.30s}
+    .waveform.active .wb:nth-child(5){animation:wv 0.75s ease-in-out infinite 0.20s}
+    .waveform.active .wb:nth-child(6){animation:wv 0.75s ease-in-out infinite 0.10s}
+    .waveform.active .wb:nth-child(7){animation:wv 0.75s ease-in-out infinite 0.00s}
+    @keyframes wv { 0%,100%{height:4px} 50%{height:20px} }
+    .mic-status { font-size: 12px; color: var(--mocha-light); }
+    .mic-status.active { color: var(--danger); font-weight: 500; }
+    .transcript-label { font-size: 10px; font-weight: 500; color: var(--mocha-light); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+    .transcript-box { background: var(--cream); border-radius: var(--radius-sm); padding: 11px 13px; font-size: 13px; color: var(--mocha); line-height: 1.5; min-height: 50px; border: 0.5px solid var(--cream-deeper); font-style: italic; }
+    .mic-actions { display: flex; gap: 8px; margin-top: 11px; }
+    .btn-p { flex:1; padding: 9px; background: var(--mocha); color: var(--cream); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.15s, transform 0.1s; }
+    .btn-p:hover { background: var(--mocha-deep); }
+    .btn-p:active { transform: scale(0.98); }
+    .btn-p:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-s { padding: 9px 13px; background: transparent; color: var(--mocha-light); border: 0.5px solid var(--cream-deeper); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.15s; white-space: nowrap; }
+    .btn-s:hover { background: var(--cream); }
+
+    .supplier-inner { display: flex; align-items: flex-end; gap: 12px; }
+    .supplier-btns { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .msg-box { flex: 1; background: var(--cream); border-radius: var(--radius-sm); padding: 11px 13px; font-size: 12px; color: var(--mocha); line-height: 1.65; white-space: pre-wrap; min-height: 54px; border: 0.5px solid var(--cream-deeper); }
+    .copy-btn { padding: 9px 16px; background: transparent; color: var(--mocha-light); border: 0.5px solid var(--cream-deeper); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; white-space: nowrap; transition: background 0.15s; }
+    .copy-btn:hover { background: var(--cream); }
+    .copy-btn.copied { background: var(--success); color: white; border-color: var(--success); }
+    .wa-btn { padding: 9px 16px; background: #25D366; color: #fff; border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; white-space: nowrap; transition: background 0.15s, transform 0.1s; }
+    .wa-btn:hover { background: #1ebe5d; transform: scale(1.02); }
+    .wa-btn:active { transform: scale(0.98); }
+
+    .csv-btn { padding: 6px 10px; background: transparent; border: 0.5px solid var(--cream-deeper); border-radius: var(--radius-sm); font-size: 11px; font-weight: 500; color: var(--mocha-light); cursor: pointer; font-family: inherit; transition: background 0.15s; white-space: nowrap; }
+    .csv-btn:hover { background: var(--cream); }
+
+    .right { display: flex; flex-direction: column; gap: 14px; }
+    .warning-bar { background: var(--danger-bg); border: 0.5px solid var(--danger-border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12px; font-weight: 500; color: var(--danger); display: none; align-items: center; gap: 7px; }
+    .warning-bar.visible { display: flex; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; padding: 7px 10px; color: var(--mocha-light); font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid var(--cream-deeper); }
+    td { padding: 10px 10px; border-bottom: 0.5px solid var(--cream); color: var(--mocha); transition: background 0.1s; }
     tr:last-child td { border-bottom: none; }
-    .pill { font-size: 11px; padding: 2px 7px; border-radius: 99px; font-weight: 500; }
-    .pill-ok { background: #e8f5e9; color: #2e6b35; }
-    .pill-warn { background: #fdecea; color: #8B2020; }
-    .full { grid-column: 1 / -1; }
-    .msg-box { background: #F0E7D5; border-radius: 8px; padding: 12px; font-size: 12px; color: #4B3935; line-height: 1.6; white-space: pre-wrap; min-height: 80px; }
-    .copy-btn { margin-top: 10px; padding: 7px 14px; border: 0.5px solid #d4c9bc; border-radius: 8px; background: transparent; font-size: 12px; color: #7a6560; cursor: pointer; }
-    .empty { color: #7a6560; font-size: 13px; text-align: center; padding: 20px 0; }
-    @media (max-width: 600px) { .main { grid-template-columns: 1fr; } .full { grid-column: 1; } }
+    tbody tr:hover td { background: var(--cream); }
+    tbody tr:nth-child(even) td { background: rgba(240,231,213,0.35); }
+    tbody tr:nth-child(even):hover td { background: var(--cream); }
+    .pill { font-size: 10px; padding: 3px 8px; border-radius: 99px; font-weight: 500; }
+    .pill-ok { background: var(--success-bg); color: var(--success); }
+    .pill-warn { background: var(--danger-bg); color: var(--danger); }
+    .empty-state { text-align: center; padding: 24px; color: var(--mocha-light); font-size: 12px; font-style: italic; }
+
+    .toast-wrap { position: fixed; bottom: 24px; right: 24px; display: flex; flex-direction: column; gap: 8px; z-index: 999; }
+    .toast { background: var(--mocha); color: var(--cream); padding: 11px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: 0 4px 20px rgba(75,57,53,0.2); animation: tin 0.25s ease; }
+    .toast.success { background: #2e6b35; }
+    .toast.error { background: var(--danger); }
+    @keyframes tin { from{opacity:0;transform:translateY(10px) scale(0.95)} to{opacity:1;transform:none} }
+    @keyframes tout { to{opacity:0;transform:translateY(10px) scale(0.95)} }
+
+    @media(max-width:900px){ .page{grid-template-columns:1fr} .mid-row{grid-template-columns:1fr} }
+    @media(max-width:500px){ .stats-row{grid-template-columns:1fr 1fr} }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-      </div>
-      StokSes
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
     </div>
-    <span class="badge">Kooperatif Asistanı</span>
+    <div class="logo-text">
+      <span class="logo-name">StokSes</span>
+      <span class="logo-sub">Sesli stok yönetim asistanı</span>
+    </div>
+  </div>
+  <div class="status-pill"><div class="status-dot"></div>Sistem aktif</div>
+</div>
+
+<div class="page">
+  <div class="left">
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon-wrap neutral">📦</div>
+        <div><div class="stat-num" id="statToplam">0</div><div class="stat-label">Toplam ürün</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap danger">⚠️</div>
+        <div><div class="stat-num danger" id="statKritik">0</div><div class="stat-label">Kritik ürün</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap success">✅</div>
+        <div><div class="stat-num success" id="statYeterli">0</div><div class="stat-label">Yeterli ürün</div></div>
+      </div>
+    </div>
+
+    <div class="mid-row">
+      <div class="card">
+        <div class="card-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          AI tarafından algılanan ürünler
+        </div>
+        <div id="aiItems">
+          <div class="ai-placeholder">
+            <div class="ai-ph-item"><div class="ai-ph-bar" style="width:55%"></div></div>
+            <div class="ai-ph-item"><div class="ai-ph-bar" style="width:70%"></div></div>
+            <div class="ai-ph-item"><div class="ai-ph-bar" style="width:45%"></div></div>
+          </div>
+          <div class="ai-empty">Stok girişi yapıldıktan sonra görünecek</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Sesli stok girişi
+        </div>
+        <div class="mic-center">
+          <div class="mic-ring" id="micRing">
+            <button class="mic-btn" id="micBtn" onclick="toggleMic()">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+          <div class="waveform" id="waveform">
+            <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+            <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
+          </div>
+          <span class="mic-status" id="micStatus">Mikrofona bas ve konuş</span>
+        </div>
+        <div class="transcript-label">Son algılanan konuşma</div>
+        <div class="transcript-box" id="transcript">Henüz konuşma algılanmadı...</div>
+        <div class="mic-actions">
+          <button class="btn-s" onclick="toggleMic()">Tekrar dinle</button>
+          <button class="btn-p" id="sendBtn" onclick="stokIsle()" disabled>Stoğa işle</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Tedarikçi mesajı
+      </div>
+      <div class="supplier-inner">
+        <div class="msg-box" id="tedarikciMesaji">Stok girişi yapıldıktan sonra otomatik oluşturulacak...</div>
+        <div class="supplier-btns">
+          <button class="wa-btn" onclick="whatsappPaylas()">📤 WhatsApp</button>
+          <button class="copy-btn" id="copyBtn" onclick="kopyala()">📋 Kopyala</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="main">
-    <div class="card">
-      <div class="card-title">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B3935" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        Sesli stok girişi
-      </div>
-      <div class="mic-area">
-        <button class="mic-btn" id="micBtn" onclick="toggleMic()">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        </button>
-        <span class="mic-label" id="micLabel">Mikrofona bas ve konuş</span>
-      </div>
-      <div class="transcript-box" id="transcript">Konuşman burada görünecek...</div>
-      <button class="send-btn" id="sendBtn" onclick="stokIsle()" disabled>Stoka İşle</button>
+  <div class="right">
+    <div class="warning-bar" id="warningBar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span id="warningText">0 kritik ürün bulundu</span>
     </div>
-
     <div class="card">
-      <div class="card-title">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B3935" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-        Stok durumu
-      </div>
-      <div class="stats">
-        <div class="stat"><div class="stat-num" id="statToplam">0</div><div class="stat-label">Toplam ürün</div></div>
-        <div class="stat"><div class="stat-num danger" id="statKritik">0</div><div class="stat-label">Kritik</div></div>
-        <div class="stat"><div class="stat-num" id="statYeterli">0</div><div class="stat-label">Yeterli</div></div>
+      <div class="card-title-row">
+        <div class="card-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Stok durumu
+        </div>
+        <button class="csv-btn" onclick="csvIndir()">📥 CSV indir</button>
       </div>
       <table>
-        <tr><th>Ürün</th><th>Miktar</th><th>Durum</th></tr>
+        <thead><tr><th>Ürün</th><th>Miktar</th><th>Durum</th></tr></thead>
         <tbody id="stokTablosu">
-          <tr><td colspan="3" class="empty">Henüz stok girişi yapılmadı</td></tr>
+          <tr><td colspan="3" class="empty-state">Henüz stok girişi yapılmadı</td></tr>
         </tbody>
       </table>
     </div>
-
-    <div class="card full">
-      <div class="card-title">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B3935" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Tedarikçi mesajı
-      </div>
-      <div class="msg-box" id="tedarikciMesaji">Stok girişi yaptıktan sonra otomatik oluşturulacak...</div>
-      <button class="copy-btn" onclick="kopyala()">Kopyala</button>
-    </div>
   </div>
+</div>
 
-  <script>
-    const API = 'http://127.0.0.1:8000';
-    let recognition = null;
-    let recording = false;
+<div class="toast-wrap" id="toastWrap"></div>
 
-    function toggleMic() {
-      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert('Tarayıcınız ses tanımayı desteklemiyor. Chrome kullanın.');
-        return;
-      }
-      if (recording) {
-        recognition.stop();
-        return;
-      }
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SR();
-      recognition.lang = 'tr-TR';
-      recognition.continuous = false;
-      recognition.interimResults = true;
+<script>
+  const API = 'http://127.0.0.1:8000';
+  let recognition = null, recording = false;
 
-      recognition.onstart = () => {
-        recording = true;
-        document.getElementById('micBtn').classList.add('recording');
-        document.getElementById('micLabel').textContent = 'Dinleniyor... (tekrar bas durdurmak için)';
-        document.getElementById('transcript').textContent = '';
-      };
+  function showToast(msg, type='success'){
+    const wrap = document.getElementById('toastWrap');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`; t.textContent = msg;
+    wrap.appendChild(t);
+    setTimeout(()=>{ t.style.animation='tout 0.25s ease forwards'; setTimeout(()=>t.remove(),250); }, 3000);
+  }
 
-      recognition.onresult = (e) => {
-        let text = '';
-        for (let i = 0; i < e.results.length; i++) {
-          text += e.results[i][0].transcript;
-        }
-        document.getElementById('transcript').textContent = text;
-        document.getElementById('sendBtn').disabled = false;
-      };
+  function toggleMic(){
+    if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){ showToast('Chrome gerekli.','error'); return; }
+    if(recording){ recognition.stop(); return; }
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SR();
+    recognition.lang = 'tr-TR'; recognition.continuous = false; recognition.interimResults = true;
+    recognition.onstart = () => {
+      recording = true;
+      document.getElementById('micBtn').classList.add('recording');
+      document.getElementById('micRing').classList.add('recording');
+      document.getElementById('waveform').classList.add('active');
+      document.getElementById('micStatus').textContent = 'Dinleniyor...';
+      document.getElementById('micStatus').classList.add('active');
+      document.getElementById('transcript').textContent = '';
+      document.getElementById('transcript').style.fontStyle = 'normal';
+    };
+    recognition.onresult = (e) => {
+      let text = '';
+      for(let i=0;i<e.results.length;i++) text += e.results[i][0].transcript;
+      document.getElementById('transcript').textContent = '"' + text + '"';
+      document.getElementById('sendBtn').disabled = false;
+    };
+    recognition.onend = () => {
+      recording = false;
+      document.getElementById('micBtn').classList.remove('recording');
+      document.getElementById('micRing').classList.remove('recording');
+      document.getElementById('waveform').classList.remove('active');
+      document.getElementById('micStatus').textContent = 'Mikrofona bas ve konuş';
+      document.getElementById('micStatus').classList.remove('active');
+    };
+    recognition.start();
+  }
 
-      recognition.onend = () => {
-        recording = false;
-        document.getElementById('micBtn').classList.remove('recording');
-        document.getElementById('micLabel').textContent = 'Mikrofona bas ve konuş';
-      };
-
-      recognition.start();
-    }
-
-    async function stokIsle() {
-      const metin = document.getElementById('transcript').textContent;
-      if (!metin || metin === 'Konuşman burada görünecek...') return;
-
-      document.getElementById('sendBtn').disabled = true;
-      document.getElementById('sendBtn').textContent = 'İşleniyor...';
-
-      try {
-        const res = await fetch(`${API}/stok/isle`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ metin })
-        });
-        const data = await res.json();
-        tabloGuncelle(data.stok);
-        tedarikciMesajiGetir();
-      } catch (e) {
-        alert('Bağlantı hatası. Backend çalışıyor mu?');
-      } finally {
-        document.getElementById('sendBtn').disabled = false;
-        document.getElementById('sendBtn').textContent = 'Stoka İşle';
-      }
-    }
-
-    function tabloGuncelle(stok) {
-      const tbody = document.getElementById('stokTablosu');
-      const urunler = Object.values(stok);
-      if (urunler.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" class="empty">Henüz stok girişi yapılmadı</td></tr>';
-        return;
-      }
-      let kritik = 0, yeterli = 0;
-      tbody.innerHTML = urunler.map(u => {
-        const isKritik = u.miktar <= 5;
-        if (isKritik) kritik++; else yeterli++;
-        return `<tr>
-          <td>${u.urun_adi}</td>
-          <td>${u.miktar} ${u.birim}</td>
-          <td><span class="pill ${isKritik ? 'pill-warn' : 'pill-ok'}">${isKritik ? 'Kritik' : 'Yeterli'}</span></td>
-        </tr>`;
-      }).join('');
-      document.getElementById('statToplam').textContent = urunler.length;
-      document.getElementById('statKritik').textContent = kritik;
-      document.getElementById('statYeterli').textContent = yeterli;
-    }
-
-    async function tedarikciMesajiGetir() {
-      const res = await fetch(`${API}/stok/tedarikci-mesaji`);
+  async function stokIsle(){
+    let metin = document.getElementById('transcript').textContent.replace(/^"|"$/g,'').trim();
+    if(!metin||metin==='Henüz konuşma algılanmadı...') return;
+    const btn = document.getElementById('sendBtn');
+    btn.disabled=true; btn.textContent='İşleniyor...';
+    try{
+      const res = await fetch(`${API}/stok/isle`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({metin})});
       const data = await res.json();
-      document.getElementById('tedarikciMesaji').textContent = data.mesaj;
-    }
+      aiGoster(data.urunler); tabloGuncelle(data.stok); tedarikciGetir();
+      showToast('✅ Stok başarıyla güncellendi');
+    }catch(e){ showToast('Bağlantı hatası. Backend çalışıyor mu?','error'); }
+    finally{ btn.disabled=false; btn.textContent='Stoğa işle'; }
+  }
 
-    async function stokYukle() {
-      try {
-        const res = await fetch(`${API}/stok`);
-        const data = await res.json();
-        tabloGuncelle(data.stok);
-        tedarikciMesajiGetir();
-      } catch (e) {}
-    }
+  function aiGoster(urunler){
+    const el = document.getElementById('aiItems');
+    if(!urunler||urunler.length===0){ el.innerHTML='<div class="ai-empty">Ürün algılanamadı</div>'; return; }
+    const opL={mutlak:'Eşitle',cikar:'Çıkar',ekle:'Ekle'};
+    const opC={mutlak:'op-m',cikar:'op-c',ekle:'op-e'};
+    el.innerHTML=`<div class="ai-list">${urunler.map(u=>`
+      <div class="ai-item">
+        <div class="ai-check"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+        <span class="ai-name">${u.urun_adi}</span>
+        <span class="ai-op ${opC[u.islem]||'op-m'}">${opL[u.islem]||'Eşitle'}</span>
+        <span class="ai-val">${u.miktar} ${u.birim}</span>
+      </div>`).join('')}</div>`;
+  }
 
-    function kopyala() {
-      const mesaj = document.getElementById('tedarikciMesaji').textContent;
-      navigator.clipboard.writeText(mesaj).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        btn.textContent = 'Kopyalandı!';
-        setTimeout(() => btn.textContent = 'Kopyala', 2000);
-      });
+  function tabloGuncelle(stok){
+    const tbody=document.getElementById('stokTablosu');
+    const urunler=Object.values(stok);
+    if(urunler.length===0){
+      tbody.innerHTML='<tr><td colspan="3" class="empty-state">Henüz stok girişi yapılmadı</td></tr>';
+      document.getElementById('statToplam').textContent=0;
+      document.getElementById('statKritik').textContent=0;
+      document.getElementById('statYeterli').textContent=0;
+      document.getElementById('warningBar').classList.remove('visible');
+      return;
     }
+    let kritik=0,yeterli=0;
+    tbody.innerHTML=urunler.map(u=>{
+      const isK=u.miktar<=5;
+      if(isK)kritik++;else yeterli++;
+      return `<tr><td>${u.urun_adi}</td><td>${u.miktar} ${u.birim}</td><td><span class="pill ${isK?'pill-warn':'pill-ok'}">${isK?'🔴 Kritik':'🟢 Yeterli'}</span></td></tr>`;
+    }).join('');
+    document.getElementById('statToplam').textContent=urunler.length;
+    document.getElementById('statKritik').textContent=kritik;
+    document.getElementById('statYeterli').textContent=yeterli;
+    const wb=document.getElementById('warningBar');
+    if(kritik>0){ wb.classList.add('visible'); document.getElementById('warningText').textContent=`⚠ ${kritik} kritik ürün bulundu`; }
+    else wb.classList.remove('visible');
+  }
 
-    stokYukle();
-  </script>
+  async function tedarikciGetir(){
+    const res=await fetch(`${API}/stok/tedarikci-mesaji`);
+    const data=await res.json();
+    document.getElementById('tedarikciMesaji').textContent=data.mesaj;
+  }
+
+  function kopyala(){
+    navigator.clipboard.writeText(document.getElementById('tedarikciMesaji').textContent).then(()=>{
+      const btn=document.getElementById('copyBtn');
+      btn.textContent='✅ Kopyalandı!'; btn.classList.add('copied');
+      setTimeout(()=>{ btn.textContent='📋 Kopyala'; btn.classList.remove('copied'); },2000);
+    });
+  }
+
+  function whatsappPaylas(){
+    const mesaj = document.getElementById('tedarikciMesaji').textContent;
+    const url = 'https://wa.me/?text=' + encodeURIComponent(mesaj);
+    window.open(url, '_blank');
+  }
+
+  function csvIndir(){
+    const tbody = document.getElementById('stokTablosu');
+    const rows = tbody.querySelectorAll('tr');
+    const urunler = [];
+    rows.forEach(row=>{
+      const cells = row.querySelectorAll('td');
+      if(cells.length>=3 && !row.querySelector('.empty-state')){
+        const urun = cells[0].textContent.trim();
+        const parts = cells[1].textContent.trim().split(' ');
+        const miktar = parts[0];
+        const birim = parts[1]||'adet';
+        const durum = cells[2].textContent.trim().replace('🔴 ','').replace('🟢 ','').toLowerCase();
+        urunler.push(`${urun},${miktar},${birim},${durum}`);
+      }
+    });
+    if(!urunler.length){ showToast('Önce stok girişi yapın.','error'); return; }
+    const csv = 'urun,miktar,birim,durum\n' + urunler.join('\n');
+    const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'stok-raporu.csv';
+    a.click();
+    showToast('✅ CSV indirildi');
+  }
+
+  async function stokYukle(){
+    try{
+      const res=await fetch(`${API}/stok`);
+      const data=await res.json();
+      tabloGuncelle(data.stok);
+      if(Object.keys(data.stok).length>0) tedarikciGetir();
+    }catch(e){}
+  }
+  stokYukle();
+</script>
 </body>
 </html>

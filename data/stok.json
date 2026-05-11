@@ -11,7 +11,7 @@
   },
   "domates salçası": {
     "urun_adi": "domates salçası",
-    "miktar": 4,
+    "miktar": 14,
     "birim": "kutu"
   },
   "elma": {
@@ -28,5 +28,15 @@
     "urun_adi": "patates",
     "miktar": 120,
     "birim": "kilo"
+  },
+  "elma sirkesi": {
+    "urun_adi": "elma sirkesi",
+    "miktar": 1,
+    "birim": "adet"
+  },
+  "jelibon": {
+    "urun_adi": "Jelibon",
+    "miktar": 2,
+    "birim": "paket"
   }
 }
