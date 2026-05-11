@@ -11,7 +11,17 @@
   },
   "domates salçası": {
     "urun_adi": "domates salçası",
-    "miktar": 0,
+    "miktar": 4,
+    "birim": "kutu"
+  },
+  "elma": {
+    "urun_adi": "elma",
+    "miktar": 1,
+    "birim": "adet"
+  },
+  "salatalık": {
+    "urun_adi": "salatalık",
+    "miktar": 3,
     "birim": "adet"
   }
 }
