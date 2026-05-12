@@ -1,7 +1,7 @@
 {
   "un": {
     "urun_adi": "un",
-    "miktar": 92,
+    "miktar": 36,
     "birim": "kilo"
   },
   "ayçiçek yağı": {
@@ -11,37 +11,142 @@
   },
   "domates salçası": {
     "urun_adi": "domates salçası",
-    "miktar": 14,
+    "miktar": 3,
     "birim": "kutu"
   },
-  "elma": {
-    "urun_adi": "elma",
-    "miktar": 1,
-    "birim": "adet"
-  },
-  "salatalık": {
-    "urun_adi": "salatalık",
-    "miktar": 3,
-    "birim": "adet"
-  },
-  "patates": {
-    "urun_adi": "patates",
-    "miktar": 120,
+  "şeker": {
+    "urun_adi": "şeker",
+    "miktar": 25,
     "birim": "kilo"
   },
-  "elma sirkesi": {
-    "urun_adi": "elma sirkesi",
+  "pirinç": {
+    "urun_adi": "pirinç",
+    "miktar": 4,
+    "birim": "kilo"
+  },
+  "mercimek": {
+    "urun_adi": "mercimek",
+    "miktar": 2,
+    "birim": "kilo"
+  },
+  "zeytinyağı": {
+    "urun_adi": "zeytinyağı",
+    "miktar": 8,
+    "birim": "şişe"
+  },
+  "makarna": {
+    "urun_adi": "makarna",
+    "miktar": 0,
+    "birim": "paket"
+  },
+  "nohut": {
+    "urun_adi": "nohut",
+    "miktar": 15,
+    "birim": "kilo"
+  },
+  "bulgur": {
+    "urun_adi": "bulgur",
+    "miktar": 20,
+    "birim": "kilo"
+  },
+  "tuz": {
+    "urun_adi": "tuz",
+    "miktar": 5,
+    "birim": "paket"
+  },
+  "biber salçası": {
+    "urun_adi": "biber salçası",
     "miktar": 1,
+    "birim": "kutu"
+  },
+  "domates konservesi": {
+    "urun_adi": "domates konservesi",
+    "miktar": 18,
     "birim": "adet"
   },
-  "jelibon": {
-    "urun_adi": "Jelibon",
+  "sirke": {
+    "urun_adi": "sirke",
+    "miktar": 3,
+    "birim": "şişe"
+  },
+  "yumurta": {
+    "urun_adi": "yumurta",
+    "miktar": 2,
+    "birim": "koli"
+  },
+  "peynir": {
+    "urun_adi": "peynir",
+    "miktar": 6,
+    "birim": "kilo"
+  },
+  "tereyağı": {
+    "urun_adi": "tereyağı",
+    "miktar": 0,
+    "birim": "paket"
+  },
+  "süt": {
+    "urun_adi": "süt",
+    "miktar": 24,
+    "birim": "litre"
+  },
+  "un (kepekli)": {
+    "urun_adi": "un (kepekli)",
+    "miktar": 10,
+    "birim": "kilo"
+  },
+  "ceviz": {
+    "urun_adi": "ceviz",
+    "miktar": 3,
+    "birim": "kilo"
+  },
+  "fındık": {
+    "urun_adi": "fındık",
+    "miktar": 2,
+    "birim": "kilo"
+  },
+  "kuru üzüm": {
+    "urun_adi": "kuru üzüm",
+    "miktar": 4,
+    "birim": "kilo"
+  },
+  "bal": {
+    "urun_adi": "bal",
+    "miktar": 5,
+    "birim": "kavanoz"
+  },
+  "reçel": {
+    "urun_adi": "reçel",
+    "miktar": 0,
+    "birim": "kavanoz"
+  },
+  "çay": {
+    "urun_adi": "çay",
+    "miktar": 8,
+    "birim": "paket"
+  },
+  "kahve": {
+    "urun_adi": "kahve",
+    "miktar": 3,
+    "birim": "paket"
+  },
+  "bitkisel çay": {
+    "urun_adi": "bitkisel çay",
+    "miktar": 12,
+    "birim": "kutu"
+  },
+  "pul biber": {
+    "urun_adi": "pul biber",
     "miktar": 2,
     "birim": "paket"
   },
-  "su": {
-    "urun_adi": "su",
-    "miktar": 80,
-    "birim": "litre"
+  "kimyon": {
+    "urun_adi": "kimyon",
+    "miktar": 1,
+    "birim": "paket"
+  },
+  "nane": {
+    "urun_adi": "nane",
+    "miktar": 0,
+    "birim": "paket"
   }
 }
