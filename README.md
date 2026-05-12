@@ -141,7 +141,6 @@ python -m venv .venv
 source .venv/bin/activate
 
 # 3. Bağımlılıkları yükle
-cd backend
 pip install -r requirements.txt
 
 # 4. .env dosyası oluştur
@@ -149,13 +148,9 @@ echo "GEMINI_API_KEY=buraya_api_keyini_yaz" > .env
 
 # 5. Backend'i başlat
 uvicorn main:app --reload
-```
 
-```bash
 # 6. Frontend'i aç
-# frontend/index.html dosyasını Chrome ile aç
-```
-
+frontend/index.html dosyasını Chrome ile çift tıklayarak açın.```
 ---
 
 ## 📡 API Endpoints
