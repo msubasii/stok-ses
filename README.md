@@ -111,6 +111,7 @@ StokSes'teki AI kullanımı dekoratif değil, ürünün çekirdeği:
 ### 3. AI Önerileri
 
 Stok verisine bakarak kural tabanlı + AI destekli yorumlar üretir:
+
 - Kritik ürünler için acil uyarı
 - Düşük stokta sipariş önerisi
 - Yeterli stokta pozitif bildirim
@@ -120,18 +121,21 @@ Stok verisine bakarak kural tabanlı + AI destekli yorumlar üretir:
 ## 🚀 Kurulum
 
 ### Gereksinimler
+
 - Python 3.11+
 - Google Gemini API key ([buradan ücretsiz alın](https://aistudio.google.com/apikey))
 - Chrome (Web Speech API için)
 
 ### Adımlar
 
+**1. Repoyu klonla**
 ```bash
-# 1. Repoyu klonla
 git clone https://github.com/msubasii/stok-ses.git
 cd stok-ses
+```
 
-# 2. Sanal ortam oluştur ve aktif et
+**2. Sanal ortam oluştur ve aktif et**
+```bash
 python -m venv .venv
 
 # Windows
@@ -139,18 +143,31 @@ python -m venv .venv
 
 # Mac/Linux
 source .venv/bin/activate
+```
 
-# 3. Bağımlılıkları yükle
+**3. Bağımlılıkları yükle**
+```bash
 pip install -r requirements.txt
+```
 
-# 4. .env dosyası oluştur
-echo "GEMINI_API_KEY=buraya_api_keyini_yaz" > .env
+**4. API key'ini tanımla**
 
-# 5. Backend'i başlat
+`backend/` klasörünün içine `.env` adında bir dosya oluştur ve şunu yaz:
+```
+GEMINI_API_KEY=kendi_gemini_api_keyin
+```
+API key almak için: [aistudio.google.com/apikey](https://aistudio.google.com/apikey) (ücretsiz)
+
+**5. Backend'i başlat**
+```bash
+cd backend
 uvicorn main:app --reload
+```
 
-# 6. Frontend'i aç
-frontend/index.html dosyasını Chrome ile çift tıklayarak açın.```
+**6. Frontend'i aç**
+
+`frontend/index.html` dosyasını Chrome ile çift tıklayarak aç.
+
 ---
 
 ## 📡 API Endpoints
@@ -185,7 +202,6 @@ Bu gruplara ortak özellik: teknik bilgi yok, zaman yok, ama konuşabiliyorlar.
 
 ## 🔮 Gelecek Planlar
 
-- [ ] WhatsApp Business API entegrasyonu (gerçek mesaj gönderimi)
 - [ ] Çoklu kullanıcı ve rol yönetimi
 - [ ] Stok geçmişi ve trend analizi
 - [ ] Ses komutlarıyla tedarikçi seçimi
@@ -197,11 +213,7 @@ Bu gruplara ortak özellik: teknik bilgi yok, zaman yok, ama konuşabiliyorlar.
 ## 👩‍💻 Geliştirici
 
 **Melisa Subaşı**  
-YZTA 5.0 Hackathon — Yapay Zeka Korti  
+YZTA 5.0 Hackathon
 Google Teknoloji Akademisi
 
 ---
-
-## 📄 Lisans
-
-MIT License — özgürce kullanabilir, değiştirebilir ve dağıtabilirsiniz.
