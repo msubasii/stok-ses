@@ -7,169 +7,486 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
     :root {
-  --forest: #4B3935;
-  --forest-mid: #2e2220;
-  --forest-light: #7a6560;
-
-  --mint: #F0E7D5;
-  --mint-dark: #d0bfaa;
-
-  --eggshell: #ede4d2;
-  --eggshell-dark: #e0d4be;
-  --eggshell-deeper: #d0bfaa;
-
-  --white: #ffffff;
-
-  --danger: #8B2020;
-  --danger-bg: #fdecea;
-  --danger-border: #f5c0c0;
-
-  --success: #2e6b35;
-  --success-bg: #eaf5e9;
-
-  --info-bg: #e8f0fe;
-  --info: #1a4fa0;
-
-  --radius: 14px;
-  --radius-sm: 9px;
-
-  --shadow: 0 2px 14px rgba(75,57,53,0.09);
-}
+      --mocha: #3a2b28;
+      --mocha-mid: #2a1f1d;
+      --mocha-light: #6b5550;
+      --cream: #f5ede0;
+      --cream-dark: #e8dccb;
+      --cream-deeper: #d4c4ae;
+      --white: #ffffff;
+      --danger: #a02020;
+      --danger-bg: #fff0ef;
+      --danger-border: #f0b8b8;
+      --success: #2a6030;
+      --success-bg: #edf7ee;
+      --info-bg: #eaf0ff;
+      --info: #1840a0;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 4px rgba(58,43,40,0.06), 0 4px 16px rgba(58,43,40,0.08);
+      --shadow-md: 0 2px 8px rgba(58,43,40,0.08), 0 8px 24px rgba(58,43,40,0.10);
+      --shadow-lg: 0 4px 16px rgba(58,43,40,0.10), 0 16px 40px rgba(58,43,40,0.12);
+    }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--eggshell); min-height: 100vh; color: var(--forest); }
 
-    .header { background: var(--forest); padding: 0 32px; height: 58px; display: flex; align-items: center; justify-content: space-between; }
-    .header-left { display: flex; align-items: center; gap: 11px; }
-    .logo-mark { width: 32px; height: 32px; background: var(--mint); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-    .logo-mark svg { width: 17px; height: 17px; stroke: var(--forest); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #e8ddd0;
+      min-height: 100vh;
+      color: var(--mocha);
+    }
+
+    /* PAGE LOAD ANIMATION */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .fade-up:nth-child(1) { animation-delay: 0.05s; }
+    .fade-up:nth-child(2) { animation-delay: 0.12s; }
+    .fade-up:nth-child(3) { animation-delay: 0.19s; }
+    .fade-up:nth-child(4) { animation-delay: 0.26s; }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+    /* HEADER */
+    .header {
+      background: var(--mocha);
+      padding: 0 32px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 4px 20px rgba(58,43,40,0.25);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 12px; }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: var(--cream);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .logo-mark svg { width: 18px; height: 18px; stroke: var(--mocha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
     .logo-text { display: flex; flex-direction: column; }
-    .logo-name { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--mint); line-height: 1.1; }
-    .logo-sub { font-size: 10px; color: rgba(218,226,203,0.55); letter-spacing: 0.02em; }
-    .status-pill { display: flex; align-items: center; gap: 6px; background: rgba(218,226,203,0.1); border: 0.5px solid rgba(218,226,203,0.2); border-radius: 99px; padding: 5px 13px; font-size: 12px; color: rgba(218,226,203,0.75); }
-    .status-dot { width: 7px; height: 7px; background: #6fcf7a; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
+    .logo-name { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--cream); line-height: 1.1; letter-spacing: -0.01em; }
+    .logo-sub { font-size: 10px; color: rgba(245,237,224,0.45); letter-spacing: 0.03em; margin-top: 1px; }
 
-    .page { max-width: 1400px; margin: 0 auto; padding: 22px 28px; display: grid; grid-template-columns: 1fr 340px; gap: 18px; align-items: start; }
-    .left { display: flex; flex-direction: column; gap: 16px; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
 
-    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .stat-card { background: var(--white); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); border: 0.5px solid var(--mint-dark); display: flex; align-items: center; gap: 14px; }
-    .stat-icon-wrap { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-    .stat-icon-wrap.neutral { background: var(--mint); }
+    .header-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .header-time { font-size: 12px; font-weight: 500; color: rgba(245,237,224,0.7); }
+    .header-sync { font-size: 10px; color: rgba(245,237,224,0.4); }
+
+    .header-avatar {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #c4a882, #a8876a);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; color: white;
+      border: 1.5px solid rgba(255,255,255,0.15);
+    }
+
+    .status-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.07);
+      border: 0.5px solid rgba(255,255,255,0.12);
+      border-radius: 99px;
+      padding: 5px 12px;
+      font-size: 11px;
+      color: rgba(245,237,224,0.7);
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      background: #5ecf6a;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(94,207,106,0.6);
+      animation: blink 2.5s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1; box-shadow: 0 0 6px rgba(94,207,106,0.6);} 50%{opacity:0.6; box-shadow: 0 0 2px rgba(94,207,106,0.3);} }
+
+    /* LAYOUT */
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 30px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .left { display: flex; flex-direction: column; gap: 18px; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      border: 0.5px solid var(--cream-deeper);
+      display: flex; align-items: center; gap: 15px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+    .stat-icon-wrap {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .stat-icon-wrap.neutral { background: var(--cream); }
     .stat-icon-wrap.danger { background: var(--danger-bg); }
-    .stat-icon-wrap.success { background: var(--mint); }
-    .stat-num { font-family: 'DM Serif Display', serif; font-size: 28px; line-height: 1; color: var(--forest); }
+    .stat-icon-wrap.success { background: var(--success-bg); }
+
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 32px; line-height: 1; color: var(--mocha); }
     .stat-num.danger { color: var(--danger); }
-    .stat-num.success { color: var(--forest-light); }
-    .stat-label { font-size: 11px; color: var(--forest-light); margin-top: 3px; }
+    .stat-num.success { color: var(--success); }
+    .stat-label { font-size: 11px; color: var(--mocha-light); margin-top: 4px; font-weight: 400; }
 
-    .mid-row { display: grid; grid-template-columns: 1fr 1.25fr; gap: 14px; align-items: stretch; }
+    /* CARDS */
+    .mid-row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 16px; align-items: stretch; }
 
-    .card { background: var(--white); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); border: 0.5px solid var(--mint-dark); }
-    .card-title { font-size: 11px; font-weight: 500; color: var(--forest-light); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
-    .card-title svg { opacity: 0.6; flex-shrink: 0; }
-    .card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+      border: 0.5px solid var(--cream-deeper);
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: var(--shadow-md); }
+
+    .card-title {
+      font-size: 11px; font-weight: 600;
+      color: var(--mocha-light);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .card-title svg { opacity: 0.55; flex-shrink: 0; }
+
+    .card-title-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
     .card-title-row .card-title { margin-bottom: 0; }
 
-    .ai-list { display: flex; flex-direction: column; gap: 7px; }
-    .ai-item { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: var(--mint); border-radius: var(--radius-sm); border: 0.5px solid var(--mint-dark); animation: fadein 0.3s ease; }
-    @keyframes fadein { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
-    .ai-check { width: 16px; height: 16px; background: rgba(15,46,21,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .ai-check svg { width: 9px; height: 9px; stroke: var(--forest); stroke-width: 3; fill: none; }
-    .ai-name { font-size: 13px; font-weight: 500; color: var(--forest); flex: 1; }
-    .ai-op { font-size: 10px; padding: 2px 6px; border-radius: 99px; font-weight: 500; }
+    /* AI ITEMS */
+    .ai-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .ai-item {
+      display: flex; align-items: center; gap: 9px;
+      padding: 10px 12px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      border: 0.5px solid var(--cream-deeper);
+      animation: fadeIn 0.35s ease both;
+      transition: background 0.15s;
+    }
+    .ai-item:hover { background: var(--cream-dark); }
+
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+    .ai-check {
+      width: 18px; height: 18px;
+      background: var(--success-bg);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .ai-check svg { width: 9px; height: 9px; stroke: var(--success); stroke-width: 3; fill: none; }
+
+    .ai-name { font-size: 13px; font-weight: 500; color: var(--mocha); flex: 1; }
+    .ai-op { font-size: 10px; padding: 2px 7px; border-radius: 99px; font-weight: 600; letter-spacing: 0.02em; }
     .op-m { background: var(--info-bg); color: var(--info); }
     .op-c { background: var(--danger-bg); color: var(--danger); }
-    .op-e { background: rgba(15,46,21,0.12); color: var(--forest); }
-    .ai-val { font-size: 12px; color: var(--forest-light); white-space: nowrap; }
-    .ai-placeholder { display: flex; flex-direction: column; gap: 7px; opacity: 0.3; pointer-events: none; }
-    .ai-ph-item { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: var(--mint); border-radius: var(--radius-sm); border: 0.5px solid var(--mint-dark); }
-    .ai-ph-bar { height: 10px; background: var(--forest); border-radius: 99px; }
-    .ai-empty { font-size: 12px; color: var(--forest-light); font-style: italic; text-align: center; padding: 10px 0 4px; opacity: 0.7; }
+    .op-e { background: var(--success-bg); color: var(--success); }
+    .ai-val { font-size: 12px; color: var(--mocha-light); white-space: nowrap; font-weight: 500; }
 
-    .ai-oneri-card { background: var(--mint); border: 0.5px solid var(--mint-dark); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); animation: fadein 0.4s ease; display: none; }
+    .ai-demo-badge {
+      font-size: 9px; padding: 1px 6px; border-radius: 99px;
+      background: var(--cream-deeper); color: var(--mocha-light);
+      font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 8px; display: inline-block;
+    }
+
+    .ai-empty { font-size: 12px; color: var(--mocha-light); font-style: italic; text-align: center; padding: 14px 0 6px; opacity: 0.65; }
+
+    /* MIC */
+    .mic-center {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px;
+      padding: 10px 0 18px;
+    }
+
+    .mic-ring {
+      position: relative;
+      width: 100px; height: 100px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mic-ring::before, .mic-ring::after {
+      content: ''; position: absolute;
+      border-radius: 50%;
+      border: 1.5px solid var(--mocha);
+      opacity: 0;
+    }
+    .mic-ring.recording::before { opacity:0.20; animation: rpulse 1.4s ease-out infinite; }
+    .mic-ring.recording::after { width:148%; height:148%; opacity:0.08; animation: rpulse 1.4s ease-out infinite 0.45s; }
+    @keyframes rpulse { 0%{transform:scale(0.85);opacity:0.22} 100%{transform:scale(1.35);opacity:0} }
+
+    .mic-btn {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: var(--mocha);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), background 0.18s, box-shadow 0.18s;
+      position: relative; z-index: 1;
+      box-shadow: 0 4px 16px rgba(58,43,40,0.25), 0 1px 4px rgba(58,43,40,0.15);
+    }
+    .mic-btn:hover {
+      transform: scale(1.08);
+      background: var(--mocha-mid);
+      box-shadow: 0 6px 24px rgba(58,43,40,0.35), 0 2px 8px rgba(58,43,40,0.2);
+    }
+    .mic-btn:active { transform: scale(0.94); }
+    .mic-btn.recording {
+      background: var(--danger);
+      box-shadow: 0 4px 20px rgba(160,32,32,0.4), 0 0 0 0 rgba(160,32,32,0.3);
+      animation: glow-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes glow-pulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(160,32,32,0.4), 0 0 0 0 rgba(160,32,32,0.25); }
+      50% { box-shadow: 0 4px 20px rgba(160,32,32,0.4), 0 0 0 10px rgba(160,32,32,0); }
+    }
+    .mic-btn svg { width: 34px; height: 34px; stroke: var(--cream); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .waveform { display: flex; align-items: center; gap: 3px; height: 28px; opacity: 0; transition: opacity 0.3s; }
+    .waveform.active { opacity: 1; }
+    .wb { width: 3px; background: var(--mocha); border-radius: 99px; height: 4px; transition: height 0.1s; }
+    .waveform.active .wb:nth-child(1){animation:wv 0.7s ease-in-out infinite 0.00s}
+    .waveform.active .wb:nth-child(2){animation:wv 0.7s ease-in-out infinite 0.09s}
+    .waveform.active .wb:nth-child(3){animation:wv 0.7s ease-in-out infinite 0.18s}
+    .waveform.active .wb:nth-child(4){animation:wv 0.7s ease-in-out infinite 0.27s}
+    .waveform.active .wb:nth-child(5){animation:wv 0.7s ease-in-out infinite 0.18s}
+    .waveform.active .wb:nth-child(6){animation:wv 0.7s ease-in-out infinite 0.09s}
+    .waveform.active .wb:nth-child(7){animation:wv 0.7s ease-in-out infinite 0.00s}
+    @keyframes wv { 0%,100%{height:4px} 50%{height:22px} }
+
+    .mic-status { font-size: 12px; color: var(--mocha-light); font-weight: 400; }
+    .mic-status.active { color: var(--danger); font-weight: 600; }
+
+    /* TRANSCRIPT */
+    .transcript-label {
+      font-size: 10px; font-weight: 600;
+      color: var(--mocha-light);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .transcript-box {
+      background: linear-gradient(135deg, var(--cream) 0%, #f8f2e8 100%);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 13px; color: var(--mocha);
+      line-height: 1.6; min-height: 54px;
+      border: 0.5px solid var(--cream-deeper);
+      font-style: italic;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .transcript-box.analyzing {
+      border-color: var(--mocha-light);
+    }
+    .transcript-box .analyzing-badge {
+      display: none;
+      position: absolute; top: 8px; right: 10px;
+      font-size: 10px; font-weight: 600;
+      color: var(--mocha-light);
+      letter-spacing: 0.04em;
+      animation: pulse-text 1s ease-in-out infinite;
+    }
+    .transcript-box.analyzing .analyzing-badge { display: block; }
+    @keyframes pulse-text { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .mic-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+    .btn-p {
+      flex:1; padding: 10px;
+      background: var(--mocha); color: var(--cream);
+      border: none; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(58,43,40,0.2);
+    }
+    .btn-p:hover { background: var(--mocha-mid); box-shadow: 0 4px 14px rgba(58,43,40,0.28); transform: translateY(-1px); }
+    .btn-p:active { transform: scale(0.97) translateY(0); }
+    .btn-p:disabled { opacity: 0.38; cursor: not-allowed; box-shadow: none; transform: none; }
+
+    .btn-s {
+      padding: 10px 14px;
+      background: transparent; color: var(--mocha-light);
+      border: 0.5px solid var(--cream-deeper);
+      border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-s:hover { background: var(--cream); border-color: var(--cream-dark); }
+
+    /* AI ÖNERI */
+    .ai-oneri-card {
+      background: linear-gradient(135deg, #fffbf0 0%, #fef8e7 100%);
+      border: 0.5px solid #e8d89a;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+        }
     .ai-oneri-card.visible { display: block; }
-    .ai-oneri-header { font-size: 11px; font-weight: 500; color: var(--forest); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-    .ai-oneri-list { display: flex; flex-direction: column; gap: 7px; }
-    .ai-oneri-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--forest); line-height: 1.5; }
-    .ai-oneri-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
-    .ai-oneri-dot.warn { background: #c97b0a; }
-    .ai-oneri-dot.ok { background: var(--forest-light); }
+    .ai-oneri-header {
+      font-size: 11px; font-weight: 600;
+      color: #6a5c18;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 11px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .ai-oneri-list { display: flex; flex-direction: column; gap: 8px; }
+    .ai-oneri-item {
+      display: flex; align-items: flex-start; gap: 9px;
+      font-size: 12px; color: #4a3e10;
+      line-height: 1.55;
+    }
+    .ai-oneri-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+    .ai-oneri-dot.warn { background: #d4820a; box-shadow: 0 0 4px rgba(212,130,10,0.4); }
+    .ai-oneri-dot.ok { background: var(--success); }
     .ai-oneri-dot.info { background: var(--info); }
 
-    .mic-center { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 8px 0 16px; }
-    .mic-ring { position: relative; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; }
-    .mic-ring::before, .mic-ring::after { content: ''; position: absolute; border-radius: 50%; border: 1.5px solid var(--forest); opacity: 0; }
-    .mic-ring.recording::before { opacity:0.22; animation: rpulse 1.3s ease-out infinite; }
-    .mic-ring.recording::after { width:140%; height:140%; opacity:0.1; animation: rpulse 1.3s ease-out infinite 0.4s; }
-    @keyframes rpulse { 0%{transform:scale(0.88);opacity:0.25} 100%{transform:scale(1.3);opacity:0} }
-    .mic-btn { width: 82px; height: 82px; border-radius: 50%; background: var(--forest); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, background 0.15s; position: relative; z-index: 1; }
-    .mic-btn:hover { transform: scale(1.06); background: var(--forest-mid); }
-    .mic-btn:active { transform: scale(0.95); }
-    .mic-btn.recording { background: var(--danger); }
-    .mic-btn svg { width: 32px; height: 32px; stroke: var(--mint); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .waveform { display: flex; align-items: center; gap: 3px; height: 24px; opacity: 0; transition: opacity 0.3s; }
-    .waveform.active { opacity: 1; }
-    .wb { width: 3px; background: var(--forest); border-radius: 99px; height: 4px; }
-    .waveform.active .wb:nth-child(1){animation:wv 0.75s ease-in-out infinite 0.00s}
-    .waveform.active .wb:nth-child(2){animation:wv 0.75s ease-in-out infinite 0.10s}
-    .waveform.active .wb:nth-child(3){animation:wv 0.75s ease-in-out infinite 0.20s}
-    .waveform.active .wb:nth-child(4){animation:wv 0.75s ease-in-out infinite 0.30s}
-    .waveform.active .wb:nth-child(5){animation:wv 0.75s ease-in-out infinite 0.20s}
-    .waveform.active .wb:nth-child(6){animation:wv 0.75s ease-in-out infinite 0.10s}
-    .waveform.active .wb:nth-child(7){animation:wv 0.75s ease-in-out infinite 0.00s}
-    @keyframes wv { 0%,100%{height:4px} 50%{height:20px} }
-    .mic-status { font-size: 12px; color: var(--forest-light); }
-    .mic-status.active { color: var(--danger); font-weight: 500; }
-    .transcript-label { font-size: 10px; font-weight: 500; color: var(--forest-light); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
-    .transcript-box { background: var(--mint); border-radius: var(--radius-sm); padding: 11px 13px; font-size: 13px; color: var(--forest); line-height: 1.5; min-height: 50px; border: 0.5px solid var(--mint-dark); font-style: italic; }
-    .mic-actions { display: flex; gap: 8px; margin-top: 11px; }
-    .btn-p { flex:1; padding: 9px; background: var(--forest); color: var(--mint); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.15s, transform 0.1s; }
-    .btn-p:hover { background: var(--forest-mid); }
-    .btn-p:active { transform: scale(0.98); }
-    .btn-p:disabled { opacity: 0.4; cursor: not-allowed; }
-    .btn-s { padding: 9px 13px; background: transparent; color: var(--forest-light); border: 0.5px solid var(--mint-dark); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.15s; white-space: nowrap; }
-    .btn-s:hover { background: var(--mint); }
-
+    /* SUPPLIER */
     .supplier-inner { display: flex; align-items: flex-end; gap: 12px; }
     .supplier-btns { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
-    .msg-box { flex: 1; background: var(--mint); border-radius: var(--radius-sm); padding: 11px 13px; font-size: 12px; color: var(--forest); line-height: 1.65; white-space: pre-wrap; min-height: 54px; border: 0.5px solid var(--mint-dark); }
-    .copy-btn { padding: 9px 16px; background: transparent; color: var(--forest-light); border: 0.5px solid var(--mint-dark); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; white-space: nowrap; transition: background 0.15s; }
-    .copy-btn:hover { background: var(--mint); }
-    .copy-btn.copied { background: var(--forest); color: var(--mint); border-color: var(--forest); }
-    .wa-btn { padding: 9px 16px; background: #25D366; color: #fff; border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; white-space: nowrap; transition: background 0.15s, transform 0.1s; }
-    .wa-btn:hover { background: #1ebe5d; transform: scale(1.02); }
-    .wa-btn:active { transform: scale(0.98); }
 
-    .csv-btn { padding: 6px 10px; background: transparent; border: 0.5px solid var(--mint-dark); border-radius: var(--radius-sm); font-size: 11px; font-weight: 500; color: var(--forest-light); cursor: pointer; font-family: inherit; transition: background 0.15s; white-space: nowrap; }
-    .csv-btn:hover { background: var(--mint); }
+    .msg-box {
+      flex: 1;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 12px; color: var(--mocha);
+      line-height: 1.7; white-space: pre-wrap;
+      min-height: 58px;
+      border: 0.5px solid var(--cream-deeper);
+    }
 
+    .copy-btn {
+      padding: 9px 16px;
+      background: transparent; color: var(--mocha-light);
+      border: 0.5px solid var(--cream-deeper);
+      border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .copy-btn:hover { background: var(--cream); border-color: var(--cream-dark); }
+    .copy-btn.copied { background: var(--success); color: white; border-color: var(--success); }
+
+    .wa-btn {
+      padding: 9px 16px;
+      background: #25D366; color: #fff;
+      border: none; border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      white-space: nowrap;
+      transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(37,211,102,0.25);
+    }
+    .wa-btn:hover { background: #20c45e; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,211,102,0.35); }
+    .wa-btn:active { transform: scale(0.97); }
+
+    .csv-btn {
+      padding: 6px 11px;
+      background: transparent;
+      border: 0.5px solid var(--cream-deeper);
+      border-radius: var(--radius-sm);
+      font-size: 11px; font-weight: 500;
+      color: var(--mocha-light);
+      cursor: pointer; font-family: inherit;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .csv-btn:hover { background: var(--cream); }
+
+    /* RIGHT PANEL */
     .right { display: flex; flex-direction: column; gap: 14px; }
-    .warning-bar { background: var(--danger-bg); border: 0.5px solid var(--danger-border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12px; font-weight: 500; color: var(--danger); display: none; align-items: center; gap: 7px; }
+
+    .warning-bar {
+      background: var(--danger-bg);
+      border: 0.5px solid var(--danger-border);
+      border-radius: var(--radius-sm);
+      padding: 11px 15px;
+      font-size: 12px; font-weight: 600;
+      color: var(--danger);
+      display: none; align-items: center; gap: 8px;
+      box-shadow: 0 2px 8px rgba(160,32,32,0.08);
+    }
     .warning-bar.visible { display: flex; }
 
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th { text-align: left; padding: 7px 10px; color: var(--forest-light); font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid var(--mint-dark); }
-    td { padding: 10px 10px; border-bottom: 0.5px solid var(--mint); color: var(--forest); transition: background 0.1s; }
+    /* TABLE */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; padding: 8px 12px;
+      color: var(--mocha-light); font-weight: 600;
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--cream-deeper);
+    }
+    td {
+      padding: 12px 12px;
+      border-bottom: 0.5px solid var(--cream);
+      color: var(--mocha);
+      transition: background 0.12s;
+      font-size: 13px;
+    }
     tr:last-child td { border-bottom: none; }
-    tbody tr:hover td { background: var(--mint); }
-    tbody tr:nth-child(even) td { background: rgba(218,226,203,0.4); }
-    tbody tr:nth-child(even):hover td { background: var(--mint); }
-    .pill { font-size: 10px; padding: 3px 8px; border-radius: 99px; font-weight: 500; }
-    .pill-ok { background: var(--mint); color: var(--forest); }
-    .pill-warn { background: var(--danger-bg); color: var(--danger); }
-    .empty-state { text-align: center; padding: 24px; color: var(--forest-light); font-size: 12px; font-style: italic; }
+    tbody tr:hover td { background: var(--cream); }
+    tbody tr:nth-child(even) td { background: rgba(232,220,203,0.3); }
+    tbody tr:nth-child(even):hover td { background: var(--cream); }
 
-    .toast-wrap { position: fixed; bottom: 24px; right: 24px; display: flex; flex-direction: column; gap: 8px; z-index: 999; }
-    .toast { background: var(--forest); color: var(--mint); padding: 11px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: 0 4px 20px rgba(15,46,21,0.2); animation: tin 0.25s ease; }
-    .toast.success { background: var(--forest-light); }
+    .pill { font-size: 11px; padding: 3px 9px; border-radius: 99px; font-weight: 600; }
+    .pill-ok { background: var(--success-bg); color: var(--success); }
+    .pill-warn {
+      background: var(--danger-bg); color: var(--danger);
+      box-shadow: 0 0 0 1px rgba(160,32,32,0.15);
+    }
+
+    .empty-state { text-align: center; padding: 28px; color: var(--mocha-light); font-size: 12px; font-style: italic; }
+
+    /* TOAST */
+    .toast-wrap { position: fixed; bottom: 26px; right: 26px; display: flex; flex-direction: column; gap: 9px; z-index: 999; }
+    .toast {
+      background: var(--mocha); color: var(--cream);
+      padding: 12px 18px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      animation: tin 0.25s cubic-bezier(.34,1.56,.64,1);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .toast.success { background: #2a6030; }
     .toast.error { background: var(--danger); color: white; }
-    @keyframes tin { from{opacity:0;transform:translateY(10px) scale(0.95)} to{opacity:1;transform:none} }
-    @keyframes tout { to{opacity:0;transform:translateY(10px) scale(0.95)} }
+    @keyframes tin { from{opacity:0;transform:translateY(12px) scale(0.94)} to{opacity:1;transform:none} }
+    @keyframes tout { to{opacity:0;transform:translateY(12px) scale(0.94)} }
 
-    @media(max-width:900px){ .page{grid-template-columns:1fr} .mid-row{grid-template-columns:1fr} }
-    @media(max-width:500px){ .stats-row{grid-template-columns:1fr 1fr} }
+    @media(max-width:960px){ .page{grid-template-columns:1fr} .mid-row{grid-template-columns:1fr} }
+    @media(max-width:520px){ .stats-row{grid-template-columns:1fr 1fr} .header-meta{display:none} }
   </style>
 </head>
 <body>
@@ -184,13 +501,20 @@
       <span class="logo-sub">Sesli stok yönetim asistanı</span>
     </div>
   </div>
-  <div class="status-pill"><div class="status-dot"></div>Sistem aktif</div>
+  <div class="header-right">
+    <div class="header-meta">
+      <span class="header-time" id="headerTime"></span>
+      <span class="header-sync">Son senkronizasyon: az önce</span>
+    </div>
+    <div class="status-pill"><div class="status-dot"></div>Sistem aktif</div>
+    <div class="header-avatar">M</div>
+  </div>
 </div>
 
 <div class="page">
   <div class="left">
 
-    <div class="stats-row">
+    <div class="stats-row fade-up">
       <div class="stat-card">
         <div class="stat-icon-wrap neutral">📦</div>
         <div><div class="stat-num" id="statToplam">0</div><div class="stat-label">Toplam ürün</div></div>
@@ -205,22 +529,40 @@
       </div>
     </div>
 
-    <div class="mid-row">
+    <div class="mid-row fade-up">
+
+      <!-- AI ALGILANAN -->
       <div class="card">
         <div class="card-title">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
           AI tarafından algılanan ürünler
         </div>
         <div id="aiItems">
-          <div class="ai-placeholder">
-            <div class="ai-ph-item"><div class="ai-ph-bar" style="width:55%"></div></div>
-            <div class="ai-ph-item"><div class="ai-ph-bar" style="width:70%"></div></div>
-            <div class="ai-ph-item"><div class="ai-ph-bar" style="width:45%"></div></div>
+          <span class="ai-demo-badge">örnek</span>
+          <div class="ai-list">
+            <div class="ai-item">
+              <div class="ai-check"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+              <span class="ai-name">domates</span>
+              <span class="ai-op op-m">Eşitle</span>
+              <span class="ai-val">5 kilo</span>
+            </div>
+            <div class="ai-item">
+              <div class="ai-check"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+              <span class="ai-name">ayran</span>
+              <span class="ai-op op-m">Eşitle</span>
+              <span class="ai-val">2 koli</span>
+            </div>
+            <div class="ai-item">
+              <div class="ai-check"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+              <span class="ai-name">yumurta</span>
+              <span class="ai-op op-m">Eşitle</span>
+              <span class="ai-val">12 adet</span>
+            </div>
           </div>
-          <div class="ai-empty">Stok girişi yapıldıktan sonra görünecek</div>
         </div>
       </div>
 
+      <!-- MİKROFON -->
       <div class="card">
         <div class="card-title">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
@@ -239,7 +581,10 @@
           <span class="mic-status" id="micStatus">Mikrofona bas ve konuş</span>
         </div>
         <div class="transcript-label">Son algılanan konuşma</div>
-        <div class="transcript-box" id="transcript">Henüz konuşma algılanmadı...</div>
+        <div class="transcript-box" id="transcript">
+          Henüz konuşma algılanmadı...
+          <span class="analyzing-badge">AI ANALİZ EDİYOR...</span>
+        </div>
         <div class="mic-actions">
           <button class="btn-s" onclick="toggleMic()">Tekrar dinle</button>
           <button class="btn-p" id="sendBtn" onclick="stokIsle()" disabled>Stoğa işle</button>
@@ -247,12 +592,14 @@
       </div>
     </div>
 
-    <div class="ai-oneri-card" id="aiOneriCard">
+    <!-- AI ÖNERİ -->
+    <div class="ai-oneri-card fade-up" id="aiOneriCard">
       <div class="ai-oneri-header">💡 AI önerisi</div>
       <div class="ai-oneri-list" id="aiOneriList"></div>
     </div>
 
-    <div class="card">
+    <!-- TEDARİKÇİ -->
+    <div class="card fade-up">
       <div class="card-title">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         Tedarikçi mesajı
@@ -267,12 +614,13 @@
     </div>
   </div>
 
+  <!-- SAĞ PANEL -->
   <div class="right">
     <div class="warning-bar" id="warningBar">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       <span id="warningText">0 kritik ürün bulundu</span>
     </div>
-    <div class="card">
+    <div class="card fade-up">
       <div class="card-title-row">
         <div class="card-title">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
@@ -296,6 +644,15 @@
   const API = 'http://127.0.0.1:8000';
   let recognition = null, recording = false;
 
+  // Saat güncelle
+  function updateTime(){
+    const now = new Date();
+    const s = now.toLocaleDateString('tr-TR',{weekday:'short',day:'numeric',month:'short'}) + ' · ' +
+              now.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('headerTime').textContent = s;
+  }
+  updateTime(); setInterval(updateTime, 30000);
+
   function showToast(msg, type='success'){
     const wrap = document.getElementById('toastWrap');
     const t = document.createElement('div');
@@ -315,15 +672,19 @@
       document.getElementById('micBtn').classList.add('recording');
       document.getElementById('micRing').classList.add('recording');
       document.getElementById('waveform').classList.add('active');
-      document.getElementById('micStatus').textContent = 'Dinleniyor...';
+      document.getElementById('micStatus').textContent = '🎙️ Dinleniyor...';
       document.getElementById('micStatus').classList.add('active');
-      document.getElementById('transcript').textContent = '';
-      document.getElementById('transcript').style.fontStyle = 'normal';
+      const tb = document.getElementById('transcript');
+      tb.textContent = '';
+      tb.innerHTML = '<span class="analyzing-badge">DİNLENİYOR...</span>';
+      tb.style.fontStyle = 'normal';
+      document.getElementById('sendBtn').disabled = true;
     };
     recognition.onresult = (e) => {
       let text = '';
       for(let i=0;i<e.results.length;i++) text += e.results[i][0].transcript;
-      document.getElementById('transcript').textContent = '"' + text + '"';
+      const tb = document.getElementById('transcript');
+      tb.innerHTML = `"${text}" <span class="analyzing-badge">DİNLENİYOR...</span>`;
       document.getElementById('sendBtn').disabled = false;
     };
     recognition.onend = () => {
@@ -333,22 +694,31 @@
       document.getElementById('waveform').classList.remove('active');
       document.getElementById('micStatus').textContent = 'Mikrofona bas ve konuş';
       document.getElementById('micStatus').classList.remove('active');
+      const tb = document.getElementById('transcript');
+      const text = tb.textContent.replace('DİNLENİYOR...','').trim();
+      if(text) tb.textContent = text;
     };
     recognition.start();
   }
 
   async function stokIsle(){
-    let metin = document.getElementById('transcript').textContent.replace(/^"|"$/g,'').trim();
+    const tb = document.getElementById('transcript');
+    let metin = tb.textContent.replace(/^"|"$/g,'').trim();
     if(!metin||metin==='Henüz konuşma algılanmadı...') return;
     const btn = document.getElementById('sendBtn');
-    btn.disabled=true; btn.textContent='İşleniyor...';
+    btn.disabled=true; btn.textContent='Analiz ediliyor...';
+    tb.classList.add('analyzing');
+    tb.querySelector && tb.querySelector('.analyzing-badge') && (tb.querySelector('.analyzing-badge').style.display='block');
     try{
       const res = await fetch(`${API}/stok/isle`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({metin})});
       const data = await res.json();
       aiGoster(data.urunler); tabloGuncelle(data.stok); tedarikciGetir();
       showToast('✅ Stok başarıyla güncellendi');
     }catch(e){ showToast('Bağlantı hatası. Backend çalışıyor mu?','error'); }
-    finally{ btn.disabled=false; btn.textContent='Stoğa işle'; }
+    finally{
+      btn.disabled=false; btn.textContent='Stoğa işle';
+      tb.classList.remove('analyzing');
+    }
   }
 
   function aiGoster(urunler){
@@ -356,8 +726,8 @@
     if(!urunler||urunler.length===0){ el.innerHTML='<div class="ai-empty">Ürün algılanamadı</div>'; return; }
     const opL={mutlak:'Eşitle',cikar:'Çıkar',ekle:'Ekle'};
     const opC={mutlak:'op-m',cikar:'op-c',ekle:'op-e'};
-    el.innerHTML=`<div class="ai-list">${urunler.map(u=>`
-      <div class="ai-item">
+    el.innerHTML=`<div class="ai-list">${urunler.map((u,i)=>`
+      <div class="ai-item" style="animation-delay:${i*0.07}s">
         <div class="ai-check"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
         <span class="ai-name">${u.urun_adi}</span>
         <span class="ai-op ${opC[u.islem]||'op-m'}">${opL[u.islem]||'Eşitle'}</span>
@@ -374,18 +744,11 @@
     const kritikler = urunler.filter(u => u.miktar === 0);
     const dusukler = urunler.filter(u => u.miktar > 0 && u.miktar <= 5);
     const iyiler = urunler.filter(u => u.miktar > 20);
-    kritikler.forEach(u => {
-      oneriler.push({tip:'warn', mesaj:`${u.urun_adi} stoğu tükendi. Acil tedarik planlanmalıdır.`});
-    });
-    dusukler.forEach(u => {
-      oneriler.push({tip:'warn', mesaj:`${u.urun_adi} kritik seviyeye yaklaştı (${u.miktar} ${u.birim}). Yakın zamanda sipariş verilmesi önerilir.`});
-    });
-    iyiler.forEach(u => {
-      oneriler.push({tip:'ok', mesaj:`${u.urun_adi} stoğu stabil seviyede ilerliyor.`});
-    });
-    if(urunler.length>0 && kritikler.length===0 && dusukler.length===0){
-      oneriler.push({tip:'info', mesaj:'Tüm ürünler yeterli stok seviyesinde. Düzenli takip önerilir.'});
-    }
+    kritikler.forEach(u => oneriler.push({tip:'warn', mesaj:`${u.urun_adi} stoğu tükendi. Acil tedarik planlanmalıdır.`}));
+    dusukler.forEach(u => oneriler.push({tip:'warn', mesaj:`${u.urun_adi} kritik seviyeye yaklaştı (${u.miktar} ${u.birim}). Sipariş verilmesi önerilir.`}));
+    iyiler.forEach(u => oneriler.push({tip:'ok', mesaj:`${u.urun_adi} stoğu stabil seviyede ilerliyor.`}));
+    if(urunler.length>0 && kritikler.length===0 && dusukler.length===0)
+      oneriler.push({tip:'info', mesaj:'Tüm ürünler yeterli seviyede. Düzenli takip önerilir.'});
     list.innerHTML = oneriler.slice(0,4).map(o=>
       `<div class="ai-oneri-item"><div class="ai-oneri-dot ${o.tip}"></div><span>${o.mesaj}</span></div>`
     ).join('');
@@ -397,11 +760,16 @@
     const urunler=Object.values(stok);
     if(urunler.length===0){
       tbody.innerHTML='<tr><td colspan="3" class="empty-state">Henüz stok girişi yapılmadı</td></tr>';
-      document.getElementById('statToplam').textContent=0;
-      document.getElementById('statKritik').textContent=0;
-      document.getElementById('statYeterli').textContent=0;
+      ['statToplam','statKritik','statYeterli'].forEach(id=>document.getElementById(id).textContent=0);
       document.getElementById('warningBar').classList.remove('visible');
-      document.getElementById('aiOneriCard').classList.remove('visible');
+      // ai oneri kartini gizleme, demo oneri goster
+document.getElementById('aiOneriList').innerHTML = `
+  <div class="ai-oneri-item"><div class="ai-oneri-dot info"></div><span>Sesli komut ile stok girişi yaparak başlayın.</span></div>
+  <div class="ai-oneri-item"><div class="ai-oneri-dot ok"></div><span>"40 kilo un var, 12 şişe yağ kaldı" gibi doğal Türkçe ile konuşabilirsiniz.</span></div>
+`;
+document.getElementById('aiOneriCard').classList.add('visible');
+      
+
       return;
     }
     let kritik=0,yeterli=0;
@@ -434,33 +802,28 @@
   }
 
   function whatsappPaylas(){
-    const mesaj = document.getElementById('tedarikciMesaji').textContent;
-    window.open('https://wa.me/?text=' + encodeURIComponent(mesaj), '_blank');
+    window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('tedarikciMesaji').textContent),'_blank');
   }
 
   function csvIndir(){
-    const tbody = document.getElementById('stokTablosu');
-    const rows = tbody.querySelectorAll('tr');
+    const rows = document.getElementById('stokTablosu').querySelectorAll('tr');
     const urunler = [];
     rows.forEach(row=>{
       const cells = row.querySelectorAll('td');
-      if(cells.length>=3 && !row.querySelector('.empty-state')){
-        const urun = cells[0].textContent.trim();
+      if(cells.length>=3&&!row.querySelector('.empty-state')){
         const parts = cells[1].textContent.trim().split(' ');
-        const miktar = parts[0];
-        const birim = parts[1]||'adet';
         const durum = cells[2].textContent.trim().replace('🔴 ','').replace('🟢 ','').toLowerCase();
-        urunler.push(`${urun},${miktar},${birim},${durum}`);
+        urunler.push(`${cells[0].textContent.trim()},${parts[0]},${parts[1]||'adet'},${durum}`);
       }
     });
     if(!urunler.length){ showToast('Önce stok girişi yapın.','error'); return; }
-    const csv = 'urun,miktar,birim,durum\n' + urunler.join('\n');
-    const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+    const blob = new Blob(['\uFEFF'+'urun,miktar,birim,durum\n'+urunler.join('\n')],{type:'text/csv;charset=utf-8'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'stok-raporu.csv';
     a.click();
     showToast('✅ CSV indirildi');
+  
   }
 
   async function stokYukle(){
@@ -469,8 +832,26 @@
       const data=await res.json();
       tabloGuncelle(data.stok);
       if(Object.keys(data.stok).length>0) tedarikciGetir();
-    }catch(e){}
+      else {
+        // Demo öneri - stok boşken de göster
+        document.getElementById('aiOneriCard').classList.add('visible');
+        document.getElementById('aiOneriList').innerHTML = `
+          <div class="ai-oneri-item"><div class="ai-oneri-dot info"></div><span>Sesli komut ile stok girişi yaparak başlayın.</span></div>
+          <div class="ai-oneri-item"><div class="ai-oneri-dot ok"></div><span>Mikrofona "40 kilo un var, 12 şişe yağ kaldı" gibi söyleyebilirsiniz.</span></div>
+        `;
+      }
+    }catch(e){
+      // Backend bağlantısı yokken de göster
+      document.getElementById('aiOneriCard').classList.add('visible');
+      document.getElementById('aiOneriList').innerHTML = `
+        <div class="ai-oneri-item"><div class="ai-oneri-dot info"></div><span>Sesli komut ile stok girişi yaparak başlayın.</span></div>
+        <div class="ai-oneri-item"><div class="ai-oneri-dot ok"></div><span>"40 kilo un var, 12 şişe yağ kaldı" gibi doğal Türkçe ile konuşabilirsiniz.</span></div>
+      `;
+    }
   }
+
+
+
   stokYukle();
 </script>
 </body>
